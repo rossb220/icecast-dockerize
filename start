@@ -1,0 +1,14 @@
+#!/bin/sh
+
+mkdir -p logs 
+chown -R nobody:nogroup logs
+
+sed -i "s/#{ADMIN_USER}/$ADMIN_USER/g" icecast.xml
+sed -i "s/#{ADMIN_PASSWORD}/$ADMIN_PASSWORD/g" icecast.xml
+sed -i "s/#{PORT}/$PORT/g" icecast.xml
+sed -i "s/#{HOSTNAME}/$HOSTNAME/g" icecast.xml
+sed -i "s/#{SOURCE_PASSWORD}/$SOURCE_PASSWORD/g" icecast.xml
+sed -i "s/#{RELAY_PASSWORD}/$RELAY_PASSWORD/g" icecast.xml
+sed -i "s/#{ADMIN}/$ADMIN/g" icecast.xml
+
+icecast -c icecast.xml

@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  icecast:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+        - .env
+    volumes:
+      - data:/usr/local/share/icecast
+    labels:
+      - traefik.http.routers.radio.rule=Host(`$HOSTNAME`)
+      - traefik.http.routers.radio.tls=true
+      - traefik.http.routers.radio.tls.certresolver=lets-encrypt
+    networks:
+      - internal
+      - web
+
+volumes:
+  data:
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
